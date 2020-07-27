@@ -22,6 +22,8 @@ The 8th text file contains descriptions of the data files shared on zenodo (XXX)
 
 #### 7. Stationary distribution simulations
 
-#### 8. Zenodo data file descriptions
+#### 8. Theoretical predictions
+
+#### 9. Zenodo data file descriptions
 
 
