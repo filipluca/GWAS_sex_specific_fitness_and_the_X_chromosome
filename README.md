@@ -1,4 +1,4 @@
-# Sex and sex-linkage shape polygenic fitness variation in D. melanogaster
+# The effects of sex and sex-linkage on polygenic fitness variation in Drosophila melanogaster
 
 Welcome!
 
@@ -18,7 +18,7 @@ The 9th text file contains descriptions of the data files shared on zenodo (XXX)
 
 #### 5. Regression of effect size on MAF
 
-#### 6. Additional metrics of purifying selection
+#### 6. Alternative metrics of purifying selection
 
 #### 7. Stationary distribution simulations
 
