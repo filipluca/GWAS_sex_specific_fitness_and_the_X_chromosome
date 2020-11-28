@@ -67,7 +67,7 @@ lambda <- median(chisq) / qchisq(0.5, 1)
 
 ## Create 1000 'pheno.txt' files where individual labels have been shuffled 
 #Other columns are otherwise unchanged
-#Delta = -0.25
+#Alpha = -0.25
 set.seed(123)
 for (i in 1:1000){
   pheno.m <- read.table(paste0(dir,"reml_maf0.05/male_maf0.05_reml.indi.res"),head=T)
@@ -108,3 +108,4 @@ for (i in 1:1000){
   write.table(pheno,paste(paste0(dir,"1000_permuted_phenos_weight_0/pheno"),i,".txt",sep = "_"),row.names=F,col.names=F,quote=F)
   print(i)
 }
+

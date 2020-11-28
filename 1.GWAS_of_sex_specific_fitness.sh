@@ -32,10 +32,10 @@ for i in {1..1000}; do ~/Downloads/plink_mac/plink --assoc --pheno 1000_permuted
 for i in {1..1000}; do ~/Downloads/plink_mac/plink --assoc --pheno 1000_permuted_phenos/pheno_${i}_.txt --bfile f3c.lhm.snp --mpheno 2 --out 1000_permuted_phenos/female_maf0.05_permuted_${i} --allow-no-sex; awk '{ print $5 }' 1000_permuted_phenos/female_maf0.05_permuted_${i}.qassoc > 1000_permuted_phenos/female_maf0.05_permuted_${i}.effect; rm 1000_permuted_phenos/female_maf0.05_permuted_${i}.qassoc; rm 1000_permuted_phenos/female_maf0.05_permuted_${i}.nosex; rm 1000_permuted_phenos/female_maf0.05_permuted_${i}.log; done
 
 #######################
-## Repeat all using different values of alpha ###
+## Repeat all using different values of delta ###
 #######################
 
-## Alpha = -1
+## Delta = -1
 #Calculate kinships
 ./ldak5.mac --calc-kins-direct kinsm_maf0.05_weight_minus_1 --bfile f3c.lhm.snp --weights sect_maf0.05/weights.all --power -1 --kinship-raw YES
 #GWAS
@@ -49,7 +49,7 @@ for i in {1..1000}; do ~/Downloads/plink_mac_20200428/plink --assoc --pheno 1000
 for i in {1..1000}; do ~/Downloads/plink_mac_20200428/plink --assoc --pheno 1000_permuted_phenos_weight_minus_1/pheno_${i}_.txt --bfile f3c.lhm.snp --mpheno 2 --out 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i} --allow-no-sex; awk '{ print $5 }' 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i}.qassoc > 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i}.effect; rm 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i}.qassoc; rm 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i}.nosex; rm 1000_permuted_phenos_weight_minus_1/female_maf0.05_permuted_${i}.log; done
 
 
-## Alpha = 0
+## Delta = 0
 #Calculate kinships
 ./ldak5.mac --calc-kins-direct kinsm_maf0.05_weight_0 --bfile f3c.lhm.snp --weights sect_maf0.05/weights.all --power 0 --kinship-raw YES
 #GWAS
@@ -74,21 +74,8 @@ for i in {1..1000}; do ~/Downloads/plink_mac_20200428/plink --assoc --pheno 1000
 ./ldak5.mac --cut-genes gbat_female_maf0.05 --bfile f3c.lhm.snp --genefile ensgenes.txt --ignore-weights YES --gene-buffer 5000 --overlap NO;
 ./ldak5.mac --calc-genes-reml gbat_female_maf0.05 --bfile f3c.lhm.snp --ignore-weights YES --power -.25 --pheno pheno.txt --mpheno 2 --covar kinsm_maf0.05.vect --num-perms 1000;
 
-
-#######################
-## Band-based assosiation analysis ###
-#######################
-
-## Male
-./ldak5.mac --cut-genes band_bat_male_maf0.05 --bfile f3c.lhm.snp --genefile Dmel_chr_bands.txt --power -.25 --ignore-weights YES; 
-./ldak5.mac --calc-genes-reml band_bat_male_maf0.05 --bfile f3c.lhm.snp --ignore-weights YES --power -.25 --pheno pheno.txt --mpheno 1 --covar kinsm_maf0.05.vect --num-perms 1000;
-## Female
-./ldak5.mac --cut-genes band_bat_female_maf0.05 --bfile f3c.lhm.snp --genefile Dmel_chr_bands.txt --power -.25 --ignore-weights YES;
-./ldak5.mac --calc-genes-reml band_bat_female_maf0.05 --bfile f3c.lhm.snp --ignore-weights YES --power -.25 --pheno pheno.txt --mpheno 2 --covar kinsm_maf0.05.vect --num-perms 1000;
-
-
 #######################3
-## Random chunk-based assosiation analysis ###
+## Random chunk-based association analysis ###
 #######################
 
 ## Male
@@ -100,3 +87,4 @@ parallel --jobs 3 './ldak5.mac --cut-genes chunk_bat_male_maf0.05{} --bfile f3c.
 mkdir chunk_bat_female_maf0.05
 #for i in {1..1000}; do ./ldak5.mac --cut-genes chunk_bat_female_maf0.05 --bfile f3c.lhm.snp --genefile Dmel_chr_chunks/Dmel_chr_chunks${i}.txt --power -.25 --ignore-weights YES; ./ldak5.mac --calc-genes-reml chunk_bat_female_maf0.05 --bfile f3c.lhm.snp --ignore-weights YES --power -.25 --pheno pheno.txt --mpheno 2 --covar kinsm_maf0.05.vect; cut -d " " -f2,3,4 chunk_bat_female_maf0.05/remls.1 > chunk_bat_female_maf0.05/remls${i}; done
 parallel --jobs 3 './ldak5.mac --cut-genes chunk_bat_female_maf0.05{} --bfile f3c.lhm.snp --genefile Dmel_chr_chunks/Dmel_chr_chunks{}.txt --power -.25 --ignore-weights YES; ./ldak5.mac --calc-genes-reml chunk_bat_female_maf0.05{} --bfile f3c.lhm.snp --ignore-weights YES --power -.25 --pheno pheno.txt --mpheno 2 --covar kinsm_maf0.05.vect; cut -d " " -f2,3,4 chunk_bat_female_maf0.05{}/remls.1 > chunk_bat_female_maf0.05/remls{}; rm -r chunk_bat_female_maf0.05{}' ::: {1..1000}
+
